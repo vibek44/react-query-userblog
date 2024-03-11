@@ -1,0 +1,2 @@
+-project uses react-query to manage blog state
+-user and notification state management is done by useReducer builin hook provided by react
