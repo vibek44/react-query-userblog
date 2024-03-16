@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { NotificationContext } from '../context'
 
-const Notification = ({ notification }) => {
+const Notification = () => {
+  const [notification] = useContext(NotificationContext)
   if (!notification) return null
 
   return <p>{notification}</p>
