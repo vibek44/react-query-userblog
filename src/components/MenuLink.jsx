@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../context'
 import { Link } from 'react-router-dom'
 
-const MenuLink = ({ user, handleLogOut }) => {
+const MenuLink = ({ handleLogOut }) => {
+  const [user] = useContext(UserContext)
   const Style = {
     paddingRight: 5,
   }
