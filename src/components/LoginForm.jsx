@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useField } from '../hooks/index'
+import { NotificationContext } from '../context'
 
 const LoginForm = ({ handleLogin }) => {
+  const [, notificationDispatch] = useContext(NotificationContext)
   const userName = useField('text')
   const passWord = useField('password')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!(userName.value && passWord.value)) {
+      notificationDispatch({
+        type: 'setNotification',
+        payload: 'username or password missing',
+      })
+      setTimeout(() => {
+        notificationDispatch({ type: 'setNotification', payload: '' })
+      }, 3000)
+      //handleLogin()
+    }
+    if (userName.value && passWord.value) {
+      handleLogin({ username: userName.value, password: passWord.value })
+    }
   }
 
   return (
