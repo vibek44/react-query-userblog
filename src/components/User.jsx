@@ -31,7 +31,7 @@ const Users = ({ handleLogOut }) => {
             {resultuser.data.map((user) => (
               <tr key={user.id}>
                 <td>
-                  <Link to={`/user/${user.id}`}>{user.name}</Link>
+                  <Link to={`/user/${user.id}`}>{user.username}</Link>
                 </td>
 
                 <td> {user.blogs.length}</td>
