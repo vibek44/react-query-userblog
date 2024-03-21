@@ -3,6 +3,7 @@ import { UserContext, NotificationContext } from '../context'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { verifyUser } from '../services/loginrequest'
 import blogRequest from '../services/blogrequest'
+import { getUsers } from '../services/usersrequest'
 import { useNavigate } from 'react-router-dom'
 
 export const useLoginHook = (credentials) => {
@@ -16,7 +17,7 @@ export const useLoginHook = (credentials) => {
         .then((data) => {
           userDispatch({ type: 'setUser', payload: data })
           blogRequest.setToken(data.token)
-          navigate('/blogs')
+          navigate('/')
         })
         .catch((error) => {
           notificationDispatch({
@@ -39,13 +40,30 @@ export const useBlogHook = () => {
   const [user] = useContext(UserContext)
   const [, notificationDispatch] = useContext(NotificationContext)
   const queryClient = useQueryClient()
-  const result = useQuery({
+  const resultblog = useQuery({
     queryKey: ['blogs'],
     queryFn: async () => {
       try {
         if (user) {
           let blogs = await blogRequest.getAll()
           return blogs
+        }
+      } catch (error) {
+        notificationDispatch({
+          type: 'setNotification',
+          payload: error.response.data.error,
+        })
+      }
+      return null
+    },
+  })
+  const resultuser = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      try {
+        if (user) {
+          let blogUser = await getUsers()
+          return blogUser
         }
       } catch (error) {
         notificationDispatch({
@@ -81,14 +99,13 @@ export const useBlogHook = () => {
   const likeMutation = useMutation({
     mutationFn: blogRequest.update,
     onSuccess: (updatedBlog) => {
-      console.log(updatedBlog)
-
       const blogs = queryClient.getQueryData(['blogs'])
+      //console.log(blogs)
+
       queryClient.setQueryData(
         ['blogs'],
         blogs.map((blog) => (updatedBlog.id !== blog.id ? blog : updatedBlog))
       )
-      navigate('/blogs')
     },
     onError: (error) => {
       notificationDispatch({
@@ -128,7 +145,39 @@ export const useBlogHook = () => {
     },
   })
 
-  return { result, createMutation, likeMutation, removeMutation }
+  const commentMutation = useMutation({
+    mutationFn: blogRequest.commentUpdate,
+    onSuccess: (updatedBlog) => {
+      const blogs = queryClient.getQueryData(['blogs'])
+      //console.log(blogs)
+
+      queryClient.setQueryData(
+        ['blogs'],
+        blogs.map((blog) => (updatedBlog.id !== blog.id ? blog : updatedBlog))
+      )
+    },
+    onError: (error) => {
+      notificationDispatch({
+        type: 'setNotification',
+        payload: error.response.data.error,
+      })
+      setTimeout(() => {
+        notificationDispatch({
+          type: 'setNotification',
+          payload: '',
+        })
+      }, 3000)
+    },
+  })
+
+  return {
+    resultblog,
+    resultuser,
+    createMutation,
+    likeMutation,
+    removeMutation,
+    commentMutation,
+  }
 }
 
 export const useField = (type) => {
@@ -137,10 +186,14 @@ export const useField = (type) => {
   const onChange = (e) => {
     setValue(e.target.value)
   }
+  const onSubmit = (e) => {
+    setValue('')
+  }
 
   return {
     type,
     value,
     onChange,
+    onSubmit,
   }
 }
