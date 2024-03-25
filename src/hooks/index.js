@@ -20,19 +20,18 @@ export const useLoginHook = (credentials) => {
           navigate('/')
         })
         .catch((error) => {
-          console.log(error);
-          
-          if(error.message){
-          notificationDispatch({
-            type: 'setNotification',
-            payload: error.message,
-          })}
-          if(error.response){
-          notificationDispatch({
-            type: 'setNotification',
-            payload: error.response.data.error,
-          })
-        }
+          if (error.message) {
+            notificationDispatch({
+              type: 'setNotification',
+              payload: error.message,
+            })
+          }
+          if (error.response) {
+            notificationDispatch({
+              type: 'setNotification',
+              payload: error.response.data.error,
+            })
+          }
           setTimeout(() => {
             notificationDispatch({
               type: 'setNotification',
@@ -75,7 +74,6 @@ export const useBlogHook = () => {
           return blogUser
         }
       } catch (error) {
-        
         notificationDispatch({
           type: 'setNotification',
           payload: error.response.data.error,
@@ -90,7 +88,7 @@ export const useBlogHook = () => {
     onSuccess: (createdBlog) => {
       const blogs = queryClient.getQueryData(['blogs'])
       queryClient.setQueryData(['blogs'], blogs.concat(createdBlog))
-      navigate('/blogs')
+      navigate('/')
     },
     onError: (error) => {
       notificationDispatch({
@@ -139,7 +137,7 @@ export const useBlogHook = () => {
         ['blogs'],
         blogs.filter((blog) => removedBlog.id !== blog.id)
       )
-      navigate('/blogs')
+      navigate('/')
     },
     onError: (error) => {
       notificationDispatch({
