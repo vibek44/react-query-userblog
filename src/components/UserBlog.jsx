@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { useParams, useMatch } from 'react-router-dom'
+import UserProfile from './UserProfile'
 import { useBlogHook } from '../hooks/index'
 import { UserContext } from '../context'
 
@@ -10,17 +11,11 @@ const UserBlog = ({ handleLogOut }) => {
   const userBlogList = match
     ? resultuser.data.find((user) => user.id === match.params.id)
     : null
-  console.log(userBlogList)
-  const handleSignOut = () => {
-    handleLogOut()
-    navigate('/')
-  }
-
+  //console.log(userBlogList)
   return (
     <div>
       <h3>Blogs</h3>
-      <p> {user.username} logged in </p>
-      <button onClick={handleSignOut}>logout</button>
+      <UserProfile handleLogOut={handleLogOut} />
       <h2>{userBlogList.username}</h2>
       <h4>added blogs</h4>
       {userBlogList.blogs.map((blog) => (
