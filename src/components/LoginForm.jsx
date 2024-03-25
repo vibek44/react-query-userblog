@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { useField } from '../hooks/index'
 import { NotificationContext } from '../context'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = ({ handleLogin }) => {
   const [, notificationDispatch] = useContext(NotificationContext)
@@ -24,23 +25,26 @@ const LoginForm = ({ handleLogin }) => {
     }
   }
 
+  const Style = { width: 200 }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Login</legend>
-        <div>
-          username
-          <input {...userName} />
-        </div>
-        <div>
-          password
-          <input {...passWord} />
-        </div>
-        <button name="submitbutton" type="submit">
+    <div>
+      <h2>Login</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>username</Form.Label>
+          <Form.Control style={Style} {...userName} />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>password</Form.Label>
+          <Form.Control style={Style} {...passWord} />
+        </Form.Group>
+        <Button variant='primary' type='submit'>
           login
-        </button>
-      </fieldset>
-    </form>
+        </Button>
+      </Form>
+    </div>
   )
 }
 
