@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import UserProfile from './UserProfile'
 import { UserContext } from '../context'
 import { Link, useNavigate } from 'react-router-dom'
 import { useBlogHook } from '../hooks'
@@ -17,8 +18,7 @@ const Users = ({ handleLogOut }) => {
     return (
       <div>
         <h3>Blogs</h3>
-        <p> {user.username} logged in </p>
-        <button onClick={handleSignOut}>logout</button>
+        <UserProfile handleLogOut={handleLogOut} />
         <h2>
           <em>Users</em>
         </h2>
