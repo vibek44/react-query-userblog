@@ -20,10 +20,19 @@ export const useLoginHook = (credentials) => {
           navigate('/')
         })
         .catch((error) => {
+          console.log(error);
+          
+          if(error.message){
+          notificationDispatch({
+            type: 'setNotification',
+            payload: error.message,
+          })}
+          if(error.response){
           notificationDispatch({
             type: 'setNotification',
             payload: error.response.data.error,
           })
+        }
           setTimeout(() => {
             notificationDispatch({
               type: 'setNotification',
@@ -66,6 +75,7 @@ export const useBlogHook = () => {
           return blogUser
         }
       } catch (error) {
+        
         notificationDispatch({
           type: 'setNotification',
           payload: error.response.data.error,
