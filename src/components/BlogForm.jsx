@@ -1,5 +1,6 @@
 import React from 'react'
 import { useField } from '../hooks/index'
+import { Button, Form } from 'react-bootstrap'
 const BlogForm = ({ createBlog }) => {
   const title = useField('text')
   const author = useField('text')
@@ -9,27 +10,26 @@ const BlogForm = ({ createBlog }) => {
     event.preventDefault()
     createBlog({ title: title.value, author: author.value, url: url.value })
   }
+
+  const Style = { width: 200 }
   return (
-    <form onSubmit={handleBlogAdd}>
-      <fieldset>
-        <legend>create blog</legend>
-        <div>
-          Title
-          <input {...title} />
-        </div>
-        <div>
-          Author
-          <input {...author} />
-        </div>
-        <div>
-          Url
-          <input {...url} />
-        </div>
-        <button name="submitbutton" type="submit">
-          create
-        </button>
-      </fieldset>
-    </form>
+    <Form onSubmit={handleBlogAdd}>
+      <Form.Group>
+        <Form.Label>Title</Form.Label>
+        <Form.Control style={Style} {...title} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Author</Form.Label>
+        <Form.Control style={Style} {...author} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Url</Form.Label>
+        <Form.Control style={Style} {...url} />
+      </Form.Group>
+      <Button variant='primary' type='submit'>
+        create
+      </Button>
+    </Form>
   )
 }
 
