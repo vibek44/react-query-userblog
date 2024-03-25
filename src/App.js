@@ -28,6 +28,7 @@ const App = () => {
 
   const handleLogOut = () => {
     userDispatch({ type: 'setUser', payload: null })
+    navigate('/login')
   }
 
   const createBlog = (blog) => {
@@ -82,8 +83,7 @@ const App = () => {
             )
           }
         />
-        <Route path='/home'
-        element={<Home/>}/>
+        <Route path='/home' element={<Home />} />
         <Route
           path='/'
           element={
