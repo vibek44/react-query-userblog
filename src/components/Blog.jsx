@@ -25,6 +25,8 @@ const Blog = ({ handleLike, handleLogOut, handleComment }) => {
     formInput.onSubmit()
   }
 
+  const Style = { height: 50, marginTop: 10 }
+
   return (
     <div>
       <h3>Blogs</h3>
@@ -42,7 +44,7 @@ const Blog = ({ handleLike, handleLogOut, handleComment }) => {
       <h3>Comments</h3>
       {blog.comments.length > 0 &&
         blog.comments.map((comment, index) => <li key={index}>{comment}</li>)}
-      <input {...formInput} />
+      <input style={Style} {...formInput} />
       <button onClick={addComment}>add comment</button>
     </div>
   )
