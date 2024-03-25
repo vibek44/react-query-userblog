@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import UserProfile from './UserProfile'
 import { UserContext } from '../context'
 import { Link, useNavigate } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
@@ -6,10 +7,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 const MenuLink = ({ handleLogOut }) => {
   const navigate = useNavigate()
   const [user] = useContext(UserContext)
-  const handleSignOut = () => {
-    handleLogOut()
-    navigate('/')
-  }
+
   const Style = {
     paddingRight: 5,
   }
@@ -36,10 +34,7 @@ const MenuLink = ({ handleLogOut }) => {
           </Nav.Link>
           <Nav.Link href='#' as='span'>
             {user ? (
-              <>
-                {user.username} signed in
-                <button onClick={handleSignOut}>Logout</button>
-              </>
+              <UserProfile handleLogOut={handleLogOut} />
             ) : (
               <Link style={Style} to='/login'>
                 login
