@@ -6,6 +6,7 @@ import MenuLink from './components/MenuLink'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Footer from './components/Footer'
+import Home from './components/Home'
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
 import UserBlog from './components/UserBlog'
@@ -47,7 +48,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <Notification />
 
       <MenuLink handleLogOut={handleLogOut} />
@@ -71,7 +72,6 @@ const App = () => {
             />
           }
         />
-
         <Route
           path='/create'
           element={
@@ -82,7 +82,8 @@ const App = () => {
             )
           }
         />
-
+        <Route path='/home'
+        element={<Home/>}/>
         <Route
           path='/'
           element={
