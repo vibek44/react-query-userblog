@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import { UserContext } from '../context'
 import { useBlogHook } from '../hooks'
 import { useField } from '../hooks/index'
+import UserProfile from './UserProfile'
 import { useMatch, useNavigate } from 'react-router-dom'
 
 const Blog = ({ handleLike, handleLogOut, handleComment }) => {
-  const navigate = useNavigate()
   let formInput = useField('text')
   const [user] = useContext(UserContext)
   const { resultblog } = useBlogHook()
@@ -30,8 +30,7 @@ const Blog = ({ handleLike, handleLogOut, handleComment }) => {
   return (
     <div>
       <h3>Blogs</h3>
-      <p> {user.username} logged in </p>
-      <button onClick={handleLogOut}>logout</button>
+      <UserProfile handleLogOut={handleLogOut} />
       <h2>{blog.title}</h2>
       <a href={blog.url}>{blog.url}</a>
       <p>
